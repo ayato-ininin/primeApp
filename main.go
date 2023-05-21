@@ -54,7 +54,7 @@ func checkNumbers(scanner *bufio.Scanner) (string, bool) {
 	// try to convert what the user typed into an int
 	numToCheck, err := strconv.Atoi(scanner.Text())
 	if err != nil {
-		return "Please enter a whole numnber!", false
+		return "Please enter a whole number!", false
 	}
 
 	_, msg := isPrime(numToCheck)

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"io"
 	"os"
 	"strings"
@@ -105,3 +106,34 @@ func Test_intro(t *testing.T) {
 		}
 	}
 }
+
+func Test_checkNumbers(t *testing.T) {
+	tests := []struct {
+		name     string
+		input    string
+		expected string
+	}{
+		{name: "empty", input: "", expected: "Please enter a whole number!"},
+		{name: "zero", input: "0", expected: "0 is not prime, by definition"},
+		{name: "one", input: "1", expected: "1 is not prime, by definition"},
+		{name: "two", input: "2", expected: "2 is prime!"},
+		{name: "three", input: "3", expected: "3 is prime!"},
+		{name: "negative", input: "-11", expected: "-11 is not prime, because of negative number"},
+		{name: "typed", input: "three", expected: "Please enter a whole number!"},
+		{name: "decimal", input: "3.14", expected: "Please enter a whole number!"},
+		{name: "quit", input: "q", expected: ""},
+		{name: "QUIT", input: "Q", expected: ""},
+		{name: "greek", input: "Ω", expected: "Please enter a whole number!"},
+	}
+
+	for _, tt := range tests {
+		input := strings.NewReader(tt.input)
+		reader := bufio.NewScanner(input)
+		res, _ := checkNumbers(reader)
+
+		if !strings.EqualFold(res, tt.expected) {
+			t.Errorf("%s: expected %s but got %s", tt.name, tt.expected, res)
+		}
+	}
+}
+
