@@ -1,6 +1,10 @@
 package main
 
-import "testing"
+import (
+	"io"
+	"os"
+	"testing"
+)
 
 func Test_isPrime(t *testing.T) {
 	// result, msg := isPrime(0)
@@ -46,5 +50,33 @@ func Test_isPrime(t *testing.T) {
 		if tt.msg != msg {
 			t.Errorf("%s: expected %s but got %s", tt.name, tt.msg, msg)
 		}
+	}
+}
+
+func Test_prompt(t *testing.T) {
+	// save a copy of os.Stdout
+	oldOut := os.Stdout
+
+	// create a read and write pipe
+	r, w, _ := os.Pipe()
+
+	// set Os.Stdout to our write pipe(標準出力をバッファにリダイレクト)
+	// 基本はコンソール、ターミナルの標準出力に送られるため。
+	os.Stdout = w
+
+	prompt()
+
+	// close the write pipe
+	_ = w.Close()
+
+	// reset os.Stdout to what it was before(バッファへリダイレクトしたままだと後続のテスト等で正常に動かない)
+	os.Stdout = oldOut
+
+	// read the output of our prompt() func from our read pipe
+	out, _ := io.ReadAll(r)
+
+	// perform our test
+	if string(out) != "-> " {
+		t.Errorf("incorrect prompt: expeted -> but got %s", string(out))
 	}
 }
