@@ -8,24 +8,6 @@ import (
 )
 
 func Test_isPrime(t *testing.T) {
-	// result, msg := isPrime(0)
-	// if result {
-	// 	t.Errorf("with %d as test parameter, got true, but expected false", 0)
-	// }
-
-	// if msg != "0 is not prime, by definition" {
-	// 	t.Errorf("with %d as test parameter, got %s, but expected %s", 0, msg, "0 is not prime, by definition")
-	// }
-
-	// result, msg = isPrime(7)
-	// if !result {
-	// 	t.Errorf("with %d as test parameter, got true, but expected false", 7)
-	// }
-
-	// if msg != "7 is prime!" {
-	// 	t.Errorf("with %d as test parameter, got %s, but expected %s", 7, msg, "7 is prime!")
-	// }
-
 	// Table Test
 	primeTests := []struct {
 		name     string
